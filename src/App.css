@@ -733,3 +733,88 @@ dd { margin: 0; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Expanded portfolio and detail pages */
+.project-tagline { margin: -12px 0 22px; color: var(--mute); font-size: 17px; max-width: 58ch; }
+.copy h3 a:hover { color: var(--forest); }
+.art { text-decoration: none; }
+.art-open { position: absolute; right: 18px; bottom: 16px; display: inline-flex; gap: 7px; align-items: center; font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--forest); opacity: 0; transform: translateY(5px); transition: .25s; }
+.art:hover .art-open { opacity: 1; transform: translateY(0); }
+.row { text-align: left; }
+.row h4 { line-height: 1.1; }
+.research-groups { display: grid; grid-template-columns: 1fr; gap: 36px; }
+.group-label { color: var(--forest); margin: 0 0 12px; }
+.research-row { border-top: 1px solid var(--line); padding: 20px 0 24px; max-width: 950px; }
+.research-row h3 { font-size: clamp(25px, 3vw, 36px); line-height: 1.16; margin: 9px 0; }
+.research-row h3 a:hover { color: var(--forest); }
+.research-row p { color: var(--mute); margin: 0 0 10px; font-size: 14px; }
+.research-row .mono { color: var(--forest); }
+.about-small { color: var(--mute); font-size: 16px; margin-top: 20px; }
+.internship-card { border: 1px solid var(--line); border-radius: 18px; padding: 30px; background: rgba(255,255,255,.55); margin: 44px 0 70px; }
+.internship-card.compact { margin: 54px 0 0; }
+.internship-top { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; color:var(--forest); }
+.internship-card h3 { font-size: clamp(27px,4vw,42px); line-height:1.12; margin:20px 0 4px; }
+.internship-org { color:var(--mute); margin:0 0 22px; }
+.internship-card p { max-width: 900px; }
+.capability-box { margin-top:26px; padding:24px; background:var(--paper); border-radius:12px; }
+.capability-box blockquote { font: 400 clamp(22px,3vw,34px)/1.25 var(--serif); margin:14px 0; color:var(--ink); }
+.capability-box > p:last-of-type { color:var(--mute); }
+.ladder { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:20px; }
+.ladder span { background:rgba(255,255,255,.75); border:1px solid var(--line); border-radius:9px; padding:10px; font-size:12px; }
+.ladder b { display:block; color:var(--forest); font:11px var(--mono); margin-bottom:5px; }
+.internship-foot { color:var(--mute); font-size:13px; margin:18px 0 0; }
+.detail-page { min-height:70vh; padding:38px 0 100px; }
+.back { display:inline-flex; align-items:center; gap:9px; color:var(--forest); font-weight:600; margin:4px 0 40px; }
+.detail-hero { display:grid; grid-template-columns:1.15fr .85fr; gap:50px; align-items:center; padding:28px 0 70px; border-bottom:1px solid var(--line); }
+.detail-hero h1,.research-detail-head h1 { font-size:clamp(52px,8vw,108px); line-height:.98; margin:18px 0; max-width:12ch; }
+.detail-tagline { color:var(--mute); font-size:21px; max-width:58ch; }
+.detail-art { background:linear-gradient(145deg,#E8F4FA,#EAF3ED); border-radius:18px; min-height:280px; display:grid; place-items:center; }
+.detail-art .motif { width:85%; }
+.detail-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:26px; }
+.btn.small { padding:10px 16px; font-size:13px; }
+.detail-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:70px; padding:60px 0; }
+.detail-grid h2 { font:400 clamp(30px,4vw,48px)/1.12 var(--serif); margin:15px 0 24px; }
+.detail-grid h3 { font-size:32px; margin:34px 0 12px; }
+.detail-grid section > p:not(.mono) { color:var(--mute); }
+.detail-list { padding-left:22px; }
+.detail-list li { padding:0 0 14px 8px; }
+.detail-panel { border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:16px; background:rgba(255,255,255,.55); }
+.detail-panel .mono { color:var(--forest); margin-bottom:14px; }
+.detail-panel ul,.caveats ul { padding-left:19px; }
+.detail-panel li,.caveats li { padding:0 0 10px 3px; color:var(--mute); font-size:14px; }
+.metric-line { display:flex; justify-content:space-between; gap:15px; align-items:baseline; border-bottom:1px solid var(--line); padding:10px 0; }
+.metric-line b { font:400 30px var(--serif); color:var(--forest); }
+.metric-line span { color:var(--mute); font-size:12px; text-align:right; }
+.detail-panel .chips { display:flex; flex-wrap:wrap; gap:7px; }
+.detail-panel .chips span { border:1px solid var(--line); background:var(--paper); padding:5px 10px; border-radius:99px; font-size:12px; }
+.caveats { border-top:1px solid var(--line); padding:30px 0; }
+.caveats .mono { color:var(--forest); }
+.caveats ul { columns:2; column-gap:45px; }
+.next-links { display:flex; justify-content:space-between; gap:15px; border-top:1px solid var(--line); padding-top:25px; }
+.research-detail-head { padding:20px 0 50px; border-bottom:1px solid var(--line); }
+.research-detail-head h1 { max-width:17ch; font-size:clamp(42px,6.5vw,84px); }
+.authors { color:var(--mute); }
+.research-detail-body { display:grid; grid-template-columns:1.2fr .8fr; gap:70px; padding:55px 0; }
+.research-detail-body section > p:not(.mono) { font-size:19px; max-width:70ch; }
+.research-detail-body .mono { color:var(--forest); margin:24px 0 12px; }
+.research-detail-body .mono:first-child { margin-top:0; }
+.research-detail-body aside h3 { font-size:26px; margin:0 0 20px; }
+.note-box,.pending-study { background:var(--paper); border-radius:12px; padding:20px; margin:25px 0; }
+.note-box p,.pending-study p { margin-bottom:0; }
+.research-group-page { margin:35px 0; }
+.subhead { font:400 clamp(36px,5vw,58px) var(--serif); margin-top:70px; }
+.pending-study { margin-top:25px; }
+.pending-study h3 { font:400 32px/1.15 var(--serif); margin:10px 0; }
+.pending-study .mono { color:var(--forest); }
+.pending-note { color:var(--mute); font-size:14px; }
+@media(max-width:860px) {
+ .detail-hero,.detail-grid,.research-detail-body { grid-template-columns:1fr; gap:28px; }
+ .detail-art { min-height:210px; }
+ .detail-grid { padding:38px 0; }
+ .caveats ul { columns:1; }
+ .ladder { grid-template-columns:repeat(2,1fr); }
+ .ladder span:last-child { grid-column:span 2; }
+ .internship-card { padding:20px; }
+ .research-detail-head h1 { font-size:clamp(40px,11vw,70px); }
+}
+.archive-link { margin-top: 28px; }

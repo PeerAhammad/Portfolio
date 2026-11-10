@@ -1,104 +1,48 @@
 import { useEffect, useState } from "react";
 import { motion, MotionConfig } from "framer-motion";
-import { ArrowUpRight, Download, Menu, X } from "lucide-react";
-import { LINKS, featured, others, timeline, skills, interests, pubs } from "./data";
+import { ArrowLeft, ArrowUpRight, Download, Menu, X, ExternalLink } from "lucide-react";
+import { LINKS, featured, others, projects, research, internship, pendingStudy, skills, interests } from "./data";
+import type { Project, ResearchItem } from "./data";
 import Motif from "./components/Motif";
 import "./App.css";
 
-const rise = { initial: { opacity: 0, y: 28 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.2 }, transition: { duration: 0.7, ease: [0.2, 0.7, 0.2, 1] as const } };
-const nav = [["Work", "#work"], ["Research", "#research"], ["About", "#about"], ["Contact", "#contact"]];
+const rise = { initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.15 }, transition: { duration: 0.6, ease: [0.2, 0.7, 0.2, 1] as const } };
+const nav = [["Home", "/"], ["Projects", "/#projects"], ["Research", "/#research"], ["About", "/#about"], ["Contact", "/#contact"]];
 
-export default function App() {
-  const [open, setOpen] = useState(false);
-  useEffect(() => { const k = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false); window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
-  return (
-    <MotionConfig reducedMotion="user">
-      <a className="skip" href="#work">Skip to content</a>
-      <header className="nav">
-        <a href="#top" className="brand">Peer Ahammad<i>.</i></a>
-        <button className="burger" aria-label="Toggle menu" aria-expanded={open} aria-controls="site-nav" onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
-        <nav id="site-nav" aria-label="Primary" className={open ? "open" : ""}>
-          {nav.map(([l, h]) => <a key={l} href={h} onClick={() => setOpen(false)}>{l}</a>)}
-          <a className="pill" href={LINKS.resume} target="_blank" rel="noreferrer">Resume <Download size={14} /></a>
-        </nav>
-      </header>
-
-      <main id="top">
-        <section className="hero wrap">
-          <p className="mono status"><span className="dot" />Open to research &amp; engineering opportunities · 2026</p>
-          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
-            I study how learning systems <em>behave</em>, and build the ones that <span className="u">hold&nbsp;up.</span>
-          </motion.h1>
-          <div className="hero-foot">
-            <p>AI/ML researcher and engineer. Switching state-space models, sequential detection, and the evaluation of reliable AI systems.</p>
-            <div className="cta"><a className="btn" href="#work">See the work</a><a className="btn ghost" href={LINKS.resume} target="_blank" rel="noreferrer">Resume <Download size={15} /></a></div>
-          </div>
-        </section>
-
-        <div className="ticker" aria-hidden="true"><div>{Array(4).fill("Research × Engineering × Experimentation ✳ ").join("")}</div></div>
-
-        <section className="wrap" id="work">
-          <div className="head"><p className="mono">Selected work</p><h2>Four questions, <em>pursued.</em></h2></div>
-          {featured.map((p, i) => (
-            <motion.article key={p.name} {...rise} className={`spread ${i % 2 ? "flip" : ""}`}>
-              <div className="art"><span className="big">{p.n}</span><Motif kind={p.motif} /></div>
-              <div className="copy">
-                <p className="mono">{p.kind}</p>
-                <h3>{p.name}</h3>
-                <dl>
-                  <dt>Question</dt><dd>{p.q}</dd>
-                  <dt>Approach</dt><dd>{p.a}</dd>
-                  <dt>Evidence</dt><dd>{p.e}</dd>
-                </dl>
-                {p.stats.length > 0 && <ul className="stats">{p.stats.map(([v, l]) => <li key={l}><b>{v}</b><span>{l}</span></li>)}</ul>}
-                <div className="foot"><span className="mono">{p.stack.join(" · ")}</span><span className="links">{p.links.map(([l, h]) => <a key={l} className="link" href={h} target="_blank" rel="noreferrer">{l} <ArrowUpRight size={15} /></a>)}</span></div>
-              </div>
-            </motion.article>
-          ))}
-          <div className="more"><p className="mono">Also built</p>
-            {others.map(([n, name, kind, d, s, href]) => (
-              <motion.a key={name} {...rise} className="row" href={href} target="_blank" rel="noreferrer">
-                <span className="mono">{n}</span><h4>{name}</h4><span className="mono kind">{kind}</span><p>{d}<small>{s}</small></p><ArrowUpRight size={20} />
-              </motion.a>))}
-          </div>
-        </section>
-
-        <section className="research" id="research"><div className="wrap">
-          <div className="head"><p className="mono">Research timeline</p><h2>Curiosity with <em>rigour.</em></h2></div>
-          <ol className="tl">
-            {timeline.map(t => (
-              <motion.li key={t.title} {...rise} className={t.live ? "live" : ""}>
-                <span className="when">{t.when}</span>
-                <div><p className="mono">{t.tag}{t.live && " · ongoing"}</p><h3>{t.title}</h3><p>{t.body}</p>
-                  {t.href && <a className="link" href={t.href} target="_blank" rel="noreferrer">{t.cta} <ArrowUpRight size={15} /></a>}</div>
-              </motion.li>))}
-          </ol>
-          <p className="mono sub">Research interests</p>
-          <ul className="chips">{interests.map(i => <li key={i}>{i}</li>)}</ul>
-          <p className="mono sub">Publications &amp; manuscripts</p>
-          <ul className="pubs">{pubs.map(([s, t, c, h, l]) => <li key={t}><span className="mono">{s}</span><h3>{t}</h3><p>{c}</p>{h && <a className="link" href={h} target="_blank" rel="noreferrer">{l} <ArrowUpRight size={15} /></a>}</li>)}</ul>
-        </div></section>
-
-        <section className="wrap about" id="about">
-          <div className="head"><p className="mono">About</p><h2>Theory and <em>implementation.</em></h2></div>
-          <div className="cols">
-            <p>I'm a Computer Science undergraduate at VTU, Belagavi, and a co-author of an accepted NeurIPS 2026 poster. I work between ML research and engineering: implementing models, running the experiments, and building the applications around them.</p>
-            <div>{skills.map(([g, s]) => <div className="sk" key={g}><b className="mono">{g}</b><p>{s}</p></div>)}</div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="foot-main" id="contact"><div className="wrap">
-        <p className="mono">Get in touch</p>
-        <h2>Let's work on something <em>that matters.</em></h2>
-        <div className="soc">
-          <a href={LINKS.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={16} /></a>
-          <a href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={16} /></a>
-          <a href={LINKS.orcid} target="_blank" rel="noreferrer">ORCID <ArrowUpRight size={16} /></a>
-          <a href={LINKS.resume} target="_blank" rel="noreferrer">Resume (PDF) <Download size={16} /></a>
-        </div>
-        <p className="mono sign">© 2026 Peer Ahammad · Belagavi, India</p>
-      </div></footer>
-    </MotionConfig>
-  );
+function useRoute() {
+  const [path, setPath] = useState(window.location.pathname);
+  useEffect(() => {
+    const onPop = () => setPath(window.location.pathname);
+    window.addEventListener("popstate", onPop);
+    const onClick = (event: MouseEvent) => {
+      const a = (event.target as HTMLElement).closest("a");
+      if (!a || a.target === "_blank" || a.origin !== window.location.origin || !a.pathname.startsWith("/projects/") && !a.pathname.startsWith("/research/")) return;
+      event.preventDefault(); history.pushState({}, "", a.href); setPath(window.location.pathname); window.scrollTo(0, 0);
+    };
+    document.addEventListener("click", onClick);
+    return () => { window.removeEventListener("popstate", onPop); document.removeEventListener("click", onClick); };
+  }, []);
+  return path;
 }
+
+function Header({ active = "" }: { active?: string }) {
+  const [open, setOpen] = useState(false);
+  return <header className="nav"><a href="/" className="brand">Peer Ahammad<i>.</i></a><button className="burger" aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X size={22}/> : <Menu size={22}/>}</button><nav className={open ? "open" : ""} aria-label="Primary">{nav.map(([label, href]) => <a key={label} className={active === label ? "active" : ""} href={href} onClick={() => setOpen(false)}>{label}</a>)}<a className="pill" href={LINKS.resume} target="_blank" rel="noreferrer">Resume <Download size={14}/></a></nav></header>;
+}
+function Footer() { return <footer className="foot-main" id="contact"><div className="wrap"><p className="mono">Get in touch</p><h2>Let's work on something <em>that matters.</em></h2><div className="soc">{[["GitHub", LINKS.github],["LinkedIn", LINKS.linkedin],["ORCID", LINKS.orcid],["Resume (PDF)", LINKS.resume]].map(([n,h])=><a key={n} href={h} target="_blank" rel="noreferrer">{n} <ArrowUpRight size={16}/></a>)}</div><p className="mono sign">© 2026 Peer Ahammad · Belagavi, India</p></div></footer>; }
+function SectionHead({ eyebrow, title }: { eyebrow: string; title: React.ReactNode }) { return <div className="head"><p className="mono">{eyebrow}</p><h2>{title}</h2></div>; }
+
+function ProjectCard({ p, i }: { p: Project; i: number }) { return <motion.article {...rise} className={`spread ${i % 2 ? "flip" : ""}`}><a className="art" href={`/projects/${p.slug}`} aria-label={`Read ${p.name} project details`}><span className="big">{p.n}</span><Motif kind={p.motif}/><span className="art-open">Explore project <ArrowUpRight size={16}/></span></a><div className="copy"><p className="mono">{p.kind}</p><h3><a href={`/projects/${p.slug}`}>{p.name}</a></h3><p className="project-tagline">{p.tagline}</p><dl><dt>Question</dt><dd>{p.question}</dd><dt>Evidence</dt><dd>{p.evidence[0]}</dd></dl>{p.metrics && <ul className="stats">{p.metrics.slice(0,3).map(([v,l])=><li key={l}><b>{v}</b><span>{l}</span></li>)}</ul>}<div className="foot"><span className="mono">{p.stack.slice(0,4).join(" · ")}</span><a className="link" href={`/projects/${p.slug}`}>Read project <ArrowUpRight size={15}/></a></div></div></motion.article>; }
+
+function Home() { return <><section className="hero wrap"><p className="mono status"><span className="dot"/>AI/ML research & engineering · VTU CSE · 2026</p><motion.h1 initial={{opacity:0,y:36}} animate={{opacity:1,y:0}} transition={{duration:.8}}>I study how learning systems <em>behave</em>, and build the ones that <span className="u">hold up.</span></motion.h1><div className="hero-foot"><p>Computer Science undergraduate working across machine learning research, temporal models, reliable AI systems and full-stack engineering.</p><div className="cta"><a className="btn" href="#projects">Explore the work</a><a className="btn ghost" href={LINKS.resume} target="_blank" rel="noreferrer">Resume <Download size={15}/></a></div></div></section><div className="ticker" aria-hidden="true"><div>{Array(4).fill("Research × Engineering × Experimentation ✳ ").join("")}</div></div>
+<section className="wrap" id="projects"><SectionHead eyebrow="Selected work" title={<>Research ideas, <em>built and tested.</em></>}/>{featured.map((p,i)=><ProjectCard key={p.slug} p={p} i={i}/>)}<div className="more"><p className="mono">More projects · {others.length} builds</p>{others.map(p=><motion.a key={p.slug} {...rise} className="row" href={`/projects/${p.slug}`}><span className="mono">{p.n}</span><h4>{p.name}</h4><span className="mono kind">{p.kind}</span><p>{p.tagline}<small>{p.stack.slice(0,4).join(" · ")}</small></p><ArrowUpRight size={20}/></motion.a>)}</div></section>
+<section className="research" id="research"><div className="wrap"><SectionHead eyebrow="Research" title={<>Questions pursued with <em>rigour.</em></>}/><div className="research-groups"><div><p className="mono group-label">Accepted</p>{research.filter(r=>r.status.startsWith("Accepted")).map(r=><ResearchRow key={r.slug} r={r}/>)}</div><div><p className="mono group-label">Preprint</p>{research.filter(r=>r.status.includes("preprint")).map(r=><ResearchRow key={r.slug} r={r}/>)}</div><div><p className="mono group-label">Looking for a venue</p>{research.filter(r=>r.status === "Looking for a venue").map(r=><ResearchRow key={r.slug} r={r}/>)}</div></div><p className="mono sub">Research interests</p><ul className="chips">{interests.map(x=><li key={x}>{x}</li>)}</ul><a className="link archive-link" href="/research">Open full research archive <ArrowUpRight size={15}/></a></div></section>
+<section className="wrap about" id="about"><SectionHead eyebrow="About" title={<>Theory, experiments and <em>implementation.</em></>}/><div className="cols"><div><p>I'm a Computer Science undergraduate at VTU, Belagavi, interested in how learning systems acquire capabilities, how we measure them, and how to build reliable AI applications around them.</p><p className="about-small">My work moves between research code, controlled experiments, model evaluation and deployed software. I value reproducibility and clear limitations as much as headline results.</p></div><div>{skills.map(([g,s])=><div className="sk" key={g}><b className="mono">{g}</b><p>{s}</p></div>)}</div></div><InternshipCard compact/></section><Footer/></>; }
+function ResearchRow({r}:{r:ResearchItem}) { return <article className="research-row"><span className="mono">{r.status}</span><h3><a href={`/research/${r.slug}`}>{r.title}</a></h3><p>{r.authors}</p><a className="link" href={`/research/${r.slug}`}>Read research note <ArrowUpRight size={15}/></a></article>; }
+function InternshipCard({compact=false}:{compact?:boolean}) { return <div className={`internship-card ${compact?"compact":""}`}><div className="internship-top"><span className="mono">Official research internship · {internship.status}</span><span className="mono">{internship.start} — {internship.end}</span></div><h3>{internship.role} — {internship.unit}</h3><p className="internship-org">{internship.organization}</p><p><b>Supervisor:</b> {internship.supervisor}</p><p><b>Official scope:</b> {internship.officialScope}</p><p><b>Proposed research direction:</b> {internship.focus}</p><p><b>Current stage:</b> {internship.stage}</p><div className="capability-box"><p className="mono">Preliminary conceptual framing · pending guide clarification</p><blockquote>“{internship.definition}”</blockquote><p>{internship.distinction}</p><div className="ladder">{internship.ladder.map((x,i)=><span key={x}><b>0{i+1}</b>{x}</span>)}</div></div><p className="internship-foot">Verified against the official VTU internship letter dated 1 September 2026. The letter authorizes research work under the supervision of Dr. M. N. Birje; it does not itself name Capability Dynamics as an approved topic.</p></div>; }
+
+function ProjectDetail({p}:{p:Project}) { return <main className="detail-page"><div className="wrap"><a className="back" href="/#projects"><ArrowLeft size={16}/> All projects</a><div className="detail-hero"><div><p className="mono">{p.kind} · Project {p.n}</p><h1>{p.name}</h1><p className="detail-tagline">{p.tagline}</p><div className="detail-actions">{p.links.map(([n,h])=><a className="btn small" key={n} href={h} target="_blank" rel="noreferrer">{n} <ExternalLink size={14}/></a>)}</div></div><div className="detail-art"><Motif kind={p.motif}/></div></div><div className="detail-grid"><section><p className="mono">The question</p><h2>{p.question}</h2><p>{p.overview}</p><h3>Approach</h3><ol className="detail-list">{p.approach.map(x=><li key={x}>{x}</li>)}</ol></section><aside><div className="detail-panel"><p className="mono">Evidence & results</p>{p.metrics?.map(([v,l])=><div className="metric-line" key={l}><b>{v}</b><span>{l}</span></div>)}<ul>{p.evidence.map(x=><li key={x}>{x}</li>)}</ul></div><div className="detail-panel"><p className="mono">My role</p><p>{p.role}</p></div><div className="detail-panel"><p className="mono">Technology</p><div className="chips">{p.stack.map(x=><span key={x}>{x}</span>)}</div></div></aside></div><section className="caveats"><p className="mono">Scope & limitations</p><ul>{p.caveats.map(x=><li key={x}>{x}</li>)}</ul></section><div className="next-links"><a href="/#projects" className="link"><ArrowLeft size={15}/> Back to projects</a><a href="/#research" className="link">Explore research <ArrowUpRight size={15}/></a></div></div></main>; }
+function ResearchDetail({r}:{r:ResearchItem}) { return <main className="detail-page"><div className="wrap"><a className="back" href="/#research"><ArrowLeft size={16}/> Research overview</a><div className="research-detail-head"><p className="mono">{r.status}</p><h1>{r.title}</h1><p className="authors">{r.authors}</p></div><div className="research-detail-body"><section><p className="mono">Abstract / overview</p><p>{r.abstract}</p><p className="mono">Technical contribution</p><p>{r.contribution}</p>{r.note&&<div className="note-box"><b>Research note</b><p>{r.note}</p></div>}</section><aside className="detail-panel"><p className="mono">Status</p><h3>{r.status}</h3>{r.href&&<a className="btn small" href={r.href} target="_blank" rel="noreferrer">{r.linkLabel||"View source"} <ExternalLink size={14}/></a>}</aside></div></div></main>; }
+function ResearchOverview() { return <main className="detail-page"><div className="wrap"><a className="back" href="/"><ArrowLeft size={16}/> Home</a><SectionHead eyebrow="Research portfolio" title={<>Research, with <em>evidence.</em></>}/>{["Accepted","arXiv preprint","Looking for a venue"].map(group=><section className="research-group-page" key={group}><p className="mono group-label">{group}</p>{research.filter(r=>group==="Accepted"?r.status.startsWith("Accepted"):r.status===group).map(r=><ResearchRow key={r.slug} r={r}/>)}</section>)}<h2 className="subhead">Ongoing institutional research</h2><InternshipCard/><div className="pending-study"><p className="mono">Separate investigation · pending guide verification</p><h3>{pendingStudy.title}</h3><p>{pendingStudy.summary}</p><p className="pending-note">{pendingStudy.note}</p></div></div></main>; }
+
+export default function App() { const path=useRoute(); const projectSlug=path.startsWith("/projects/")?path.split("/")[2]:null; const researchSlug=path.startsWith("/research/")?path.split("/")[2]:null; const project=projects.find(p=>p.slug===projectSlug); const paper=research.find(r=>r.slug===researchSlug); useEffect(()=>{document.title=project?`${project.name} — Peer Ahammad`:paper?`${paper.title} — Peer Ahammad`:path==="/research"?"Research — Peer Ahammad":"Peer Ahammad — AI/ML Research & Engineering";},[path,project,paper]); return <MotionConfig reducedMotion="user"><a className="skip" href="#projects">Skip to content</a><Header active={project?"Projects":paper||path==="/research"?"Research":""}/>{project?<ProjectDetail p={project}/>:paper?<ResearchDetail r={paper}/>:path==="/research"?<ResearchOverview/>:<Home/>}{!project&&!paper&&path!=="/research"?null:<Footer/>}</MotionConfig>; }
